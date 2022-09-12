@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Артём Семёнов](https://up.htmlacademy.ru/univer-js1/1/user/2220039).
-* Наставник: [Геннадий Максимов] (https://htmlacademy.ru/profile/gennadiy).
+* Наставник: [Геннадий Максимов](https://htmlacademy.ru/profile/gennadiy).
 
 ---
 
