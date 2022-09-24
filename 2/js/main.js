@@ -8,9 +8,11 @@ const = getRandomInteger = (from, to) => {
   
   return Math.floor(Math.random() * (to - from)) + from; // взято с https://myrusakov.ru/js-random-numbers.html
 }
+ getRandomInteger();
 
 
 const = checkLenght = (stringToCheck, maxLenght) => {
   stringToCheck = String(stringToCheck); //ввёл, чтобы не было проблем с типами данных
  return stringToCheck.length <= maxLenght ? True : False;
 }
+checkLenght();
