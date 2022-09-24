@@ -1,4 +1,4 @@
-getRandomInteger = (from, to) => {
+const = getRandomInteger = (from, to) => {
   if(to<from) {
   return 'конечное число меньше, начального'
   }
@@ -10,7 +10,7 @@ getRandomInteger = (from, to) => {
 }
 
 
-checkLenght = (stringToCheck, maxLenght) => {
+const = checkLenght = (stringToCheck, maxLenght) => {
   stringToCheck = String(stringToCheck); //ввёл, чтобы не было проблем с типами данных
  return stringToCheck.length <= maxLenght ? True : False;
 }
