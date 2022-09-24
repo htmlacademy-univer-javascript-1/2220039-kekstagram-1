@@ -1,4 +1,4 @@
-function getRandomInteger(from, to) {
+getRandomInteger = (from, to) => {
   if(to<from) {
   return 'конечное число меньше, начального'
   }
@@ -8,14 +8,9 @@ function getRandomInteger(from, to) {
   
   return Math.floor(Math.random() * (to - from)) + from; // взято с https://myrusakov.ru/js-random-numbers.html
 }
-console.log(getRandomInteger());
 
-function checkLenght (stringToCheck, maxLenght) {
+
+checkLenght = (stringToCheck, maxLenght) => {
   stringToCheck = String(stringToCheck); //ввёл, чтобы не было проблем с типами данных
-  if (stringToCheck.length <= maxLenght) {
-  return true
-  } else {
-    return false
-    }
+ return stringToCheck.length <= maxLenght ? True : False;
 }
-console.log(checkLenght());
