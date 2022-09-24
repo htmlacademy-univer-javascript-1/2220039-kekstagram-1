@@ -1,11 +1,7 @@
-const = getRandomInteger = (from, to) => {
-  if(to<from) {
-  return 'конечное число меньше, начального'
-  }
+const = getRandomInteger = (from, to) => {  
   if(from < 0 || to < 0) {
-    return 'какое то из чисел отрицательное'
+    return 0
     }
-  
   return Math.floor(Math.random() * (to - from)) + from; // взято с https://myrusakov.ru/js-random-numbers.html
 }
 getRandomInteger(4,10);
