@@ -9,6 +9,6 @@ getRandomInteger(4,10);
 
 const checkLenght = (stringToCheck, maxLenght) => {
   stringToCheck = String(stringToCheck); //ввёл, чтобы не было проблем с типами данных
-  return stringToCheck.length <= maxLenght ? true : false;
+  return stringToCheck.length <= maxLenght ? 1 : 0;
 };
 checkLenght('sfff', 8);
