@@ -1,4 +1,4 @@
-let getRandomInteger = (from, to) => {  
+const getRandomInteger = (from, to) => {  
   if(from < 0 || to < 0) {
     return 0
     }
@@ -7,7 +7,7 @@ let getRandomInteger = (from, to) => {
 getRandomInteger(4,10);
 
 
-let checkLenght = (stringToCheck, maxLenght) => {
+const checkLenght = (stringToCheck, maxLenght) => {
   stringToCheck = String(stringToCheck); //ввёл, чтобы не было проблем с типами данных
  return stringToCheck.length <= maxLenght ? True : False;
 };
