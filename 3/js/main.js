@@ -15,8 +15,7 @@ const getRandomPositiveInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
-const checkStringLength = (string, length) => {
-  return string.length <= length;
+const checkStringLength = (string, length) => string.length <= length;
 };
 checkStringLength('sdfsdf', 4);
 const createComment = (id) => ({
