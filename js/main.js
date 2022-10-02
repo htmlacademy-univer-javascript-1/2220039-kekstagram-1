@@ -10,4 +10,4 @@ getRandomPositiveInteger(4,10);
 const checkStringLength = (string, length) => {
    return string.length <= length;
 };
-checkLenght('sfff', 8);
+checkStringLength('sfff', 8);
