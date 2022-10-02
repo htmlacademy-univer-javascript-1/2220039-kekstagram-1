@@ -27,7 +27,7 @@ const createCommentsArray = () => {
   const COMMENTS = Array.from({
     length: 3
   });
-  return COMMENTS.map((element, index) => {return element = createComment(index + 1)});
+  return COMMENTS.map((element, index) => {return createComment(index + 1)});
 };
 const createPhotoData = (id) => ({
   id,
@@ -40,6 +40,6 @@ const createPhotosArray = () => {
   const PHOTOS = Array.from({
     length: 25
   });
-  return PHOTOS.map((element, index) => {return element = createPhotoData(index + 1)});
+  return PHOTOS.map((element, index) => {return createPhotoData(index + 1)});
 };
 createPhotosArray();
