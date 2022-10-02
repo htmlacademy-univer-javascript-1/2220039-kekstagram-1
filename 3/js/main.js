@@ -26,7 +26,7 @@ const createComment = (id) => ({
   name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
 });
 const createCommentsArray = () => {
-  let COMMENTS = Array.from({
+  const COMMENTS = Array.from({
     length: 3
   });
   return COMMENTS.map((element, index) => element = createComment(index + 1));
@@ -39,9 +39,9 @@ const createPhotoData = (id) => ({
   comments: createCommentsArray(),
 });
 const createPhotosArray = () => {
-  let PHOTOS = Array.from({
+  const PHOTOS = Array.from({
     length: 25
   });
-  return PHOTOS.map((element, index) => element = createPhotoData(index + 1))
+  return PHOTOS.map((element, index) => element = createPhotoData(index + 1));
 };
 createPhotosArray();
