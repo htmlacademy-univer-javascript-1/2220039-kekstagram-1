@@ -35,4 +35,5 @@ const createPhotosArray = () => {
   });
   return photos.map((element, index) => createPhotoData(index + 1));
 };
+
 export {createPhotosArray};
