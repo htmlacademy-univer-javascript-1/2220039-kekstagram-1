@@ -1,14 +1,7 @@
 import { getRandomPositiveInteger } from './util.js';
 import { NAMES, MESSAGES, DESCRIPTIONS } from './mocks.js';
+import { CountLike, AvatarNumber, MAX_COUNT_PHOTOS } from './consts.js';
 
-const CountLike = {
-  MIN: 15,
-  MAX: 200
-};
-const AvatarNumber = {
-  MIN: 1,
-  MAX: 6
-};
 
 const createComment = (id) => ({
   id,
@@ -31,7 +24,7 @@ const createPhotoData = (id) => ({
 });
 const createPhotosArray = () => {
   const photos = Array.from({
-    length: 25
+    length: MAX_COUNT_PHOTOS
   });
   return photos.map((element, index) => createPhotoData(index + 1));
 };
