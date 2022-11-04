@@ -1,6 +1,4 @@
-import {getRandomPositiveInteger,checkStringLength} from './util.js';
-import createPhotosArray from './data.js';
+import { createPhotosArray } from './data.js';
+import { rendering } from './rendering.js';
 
-getRandomPositiveInteger(10,2);
-checkStringLength('sd', 4);
-createPhotosArray();
+rendering(createPhotosArray());

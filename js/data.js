@@ -1,16 +1,7 @@
-import {getRandomPositiveInteger} from './util.js';
+import { getRandomPositiveInteger } from './util.js';
+import { NAMES, MESSAGES, DESCRIPTIONS } from './mocks.js';
+import { CountLike, AvatarNumber, MAX_COUNT_PHOTOS } from './consts.js';
 
-const NAMES = ['София Ротару', 'Beyonce', 'Marge Simpson', 'Набзделла Яичная', 'Профитроля Глушко', 'Свистина Шапокляк', 'Megan Thee-Stallion', 'Sakura Petals', 'Voices Of-The-Chord'];
-const MESSAGES = ['Всё отлично!', 'В целом всё неплохо. Но не всё.', 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.', 'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.', 'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
-const DESCRIPTIONS = ['Женщина на фото', 'София Ротару трибьют шоу', 'Marge attacks Beyonce'];
-const CountLike = {
-  MIN: 15,
-  MAX: 200
-};
-const AvatarNumber = {
-  MIN: 1,
-  MAX: 6
-};
 
 const createComment = (id) => ({
   id,
@@ -33,7 +24,7 @@ const createPhotoData = (id) => ({
 });
 const createPhotosArray = () => {
   const photos = Array.from({
-    length: 25
+    length: MAX_COUNT_PHOTOS
   });
   return photos.map((element, index) => createPhotoData(index + 1));
 };
