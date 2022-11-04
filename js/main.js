@@ -1,3 +1,4 @@
 import { createPhotosArray } from './data.js';
+import { rendering } from './rendering.js';
 
-createPhotosArray();
+rendering(createPhotosArray());
