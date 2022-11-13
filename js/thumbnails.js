@@ -2,7 +2,7 @@ const pictures = document.querySelector('.pictures');
 const template = document.querySelector('#picture').content;
 const documentFragment = document.createDocumentFragment();
 
-const rendering = (photos) => {
+const createThumbnails = (photos) => {
   for (const photo of photos) {
     const picture = template.cloneNode(true);
     picture.querySelector('.picture__img').src = photo.url;
@@ -13,4 +13,4 @@ const rendering = (photos) => {
   pictures.append(documentFragment);
 };
 
-export {rendering};
+export {createThumbnails};
