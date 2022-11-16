@@ -1,16 +1,38 @@
-const pictures = document.querySelector('.pictures');
-const template = document.querySelector('#picture').content;
-const documentFragment = document.createDocumentFragment();
+import { openBigPicture } from './big-picture.js';
 
-const createThumbnails = (photos) => {
-  for (const photo of photos) {
-    const picture = template.cloneNode(true);
-    picture.querySelector('.picture__img').src = photo.url;
-    picture.querySelector('.picture__likes').textContent = photo.likes;
-    picture.querySelector('.picture__comments').textContent = photo.comments.length;
-    documentFragment.append(picture);
-  }
-  pictures.append(documentFragment);
+const picturesContainer = document.querySelector('.pictures');
+
+let photos = [];
+
+const getThumbnailTemplate = ({ id, url, likes, comments }) => `<a href="#" class="picture js-picture" data-id="${id}">
+    <img class="picture__img" src="${url}" width="182" height="182" alt="Случайная фотография">
+    <p class="picture__info">
+      <span class="picture__comments">${comments.length}</span>
+      <span class="picture__likes">${likes}</span>
+    </p>
+  </a>
+`;
+
+const onThumbnailClick = (evt) => {
+  const target = evt.target;
+  const picture = target.closest('.js-picture');
+  const id = picture.dataset.id;
+  const [photo] = photos.filter((element) => element.id === +id);
+
+  openBigPicture(photo);
 };
 
-export {createThumbnails};
+const createThumbnails = () => {
+  photos.forEach((photo) => {
+    picturesContainer.insertAdjacentHTML('afterbegin', getThumbnailTemplate(photo));
+  });
+};
+
+const initThumbnails = (data) => {
+  photos = data.slice();
+  createThumbnails();
+  const pictures = picturesContainer.querySelectorAll('.js-picture');
+  pictures.forEach((picture) => picture.addEventListener('click', onThumbnailClick));
+};
+
+export { initThumbnails };
