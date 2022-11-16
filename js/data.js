@@ -1,4 +1,4 @@
-import { getRandomPositiveInteger } from './util.js';
+import { getRandomPositiveInteger } from './utils.js';
 import { NAMES, MESSAGES, DESCRIPTIONS } from './mocks.js';
 import { CountLike, AvatarNumber, MAX_COUNT_PHOTOS } from './consts.js';
 
