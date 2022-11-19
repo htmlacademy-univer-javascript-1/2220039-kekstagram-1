@@ -43,7 +43,7 @@ const addFieldListeners = (field) => {
   });
 };
 
-const btnAdjustment = () => {
+const adjustBtn = () => {
   submitBtn.disabled = !pristine.validate();
 };
 
@@ -54,7 +54,7 @@ const onImgUploadFieldchange = () => {
   document.addEventListener('keydown',onBtnEscKeydown);
   addFieldListeners(commentsField);
   addFieldListeners(hashtagsField);
-  btnAdjustment();
+  adjustBtn();
 };
 
 const getUniqueHashtags = (hashtags) => {
@@ -146,12 +146,12 @@ const commentHandler = (string) => {
 const validateForm = () => {
   pristine.addValidator(hashtagsField, hashtagsHandler, error);
   pristine.addValidator(commentsField, commentHandler, error);
-  btnAdjustment();
+  adjustBtn();
 };
 
-const onHashtagInput = () => btnAdjustment();
+const onHashtagInput = () => adjustBtn();
 
-const onCommentInput = () => btnAdjustment();
+const onCommentInput = () => adjustBtn();
 
 const initUploadForm = () => {
   imgUploadField.addEventListener('change', onImgUploadFieldchange);
