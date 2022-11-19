@@ -1,5 +1,7 @@
-import { createPhotosArray } from './data.js';
-import { rendering } from './rendering.js';
+import {createPhotos} from './data.js';
+import {initThumbnails} from './thumbnails.js';
+import {initUploadForm} from './form.js';
 
-rendering(createPhotosArray());
-//просто текст чтобы создать пулреквест к 7.16
+const data = createPhotos();
+initThumbnails(data);
+initUploadForm();
