@@ -1,4 +1,4 @@
-import { DEFAULT_RENDERED_COMMENTS, STEP_ADDED_COMMENTS } from './consts.js';
+import {RENDERED_COMMENTS_COUNT, STEP_ADDED_COMMENTS, SHOWN_COMMENTS_COUNT } from './consts.js';
 import { isEscapeKey } from './utils.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
@@ -10,7 +10,7 @@ const bigPictureCaption = bigPicture.querySelector('.social__caption');
 const bigPictureLike = bigPicture.querySelector('.likes-count');
 
 let actualComments = [];
-let countRenderedComments = DEFAULT_RENDERED_COMMENTS;
+let countRenderedComments = RENDERED_COMMENTS_COUNT;
 
 const getCommentTemplate = ({ avatar, message, name }) => `<li class="social__comment">
 <img class="social__picture" src="${avatar}" alt="${name}" width="35" height="35">
@@ -63,7 +63,7 @@ const closeBigPicture = () => {
   window.removeEventListener('keydown', onWindowEscKeydown);
   bigPictureCommentsLoaderBtn.classList.remove('hidden');
   bigPictureCommentsLoaderBtn.removeEventListener('click', onBigPictureCommentsLoaderBtnClick);
-  countRenderedComments = DEFAULT_RENDERED_COMMENTS;
+  countRenderedComments = SHOWN_COMMENTS_COUNT;
 };
 
 function onBigPictureCloseBtnClick() {
