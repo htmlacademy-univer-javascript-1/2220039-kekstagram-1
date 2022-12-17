@@ -4,7 +4,7 @@ const MAX_BLUR_VALUE = 3;
 const MAX_HEAT_VALUE = 3;
 const EFFECTS_STEP = 0.01;
 
-const SLIDER = {
+const Slider = {
   MIN: 0,
   MAX: MAX_EFFECT_VALUE,
   STEP: 1,
@@ -23,11 +23,11 @@ let currentEffect = '';
 
 noUiSlider.create(slider, {
   range: {
-    min: SLIDER.MIN,
-    max: SLIDER.MAX,
+    min: Slider.MIN,
+    max: Slider.MAX,
   },
-  start: SLIDER.MAX,
-  step: SLIDER.STEP,
+  start: Slider.MAX,
+  step: Slider.STEP,
   connect: 'lower',
 });
 const getEffectStep = (effectMaxValue) => effectMaxValue * EFFECTS_STEP;
@@ -61,7 +61,7 @@ const effects = {
 
   heat: () => {
     effectLevel.classList.remove('visually-hidden');
-    const effectMin = SLIDER.MAX / (MAX_HEAT_VALUE - 1);
+    const effectMin = Slider.MAX / (MAX_HEAT_VALUE - 1);
     return `brightness(${(effectMin + parseInt(effectLevelValue.value, RADIX)) * getEffectStep(MAX_HEAT_VALUE - 1)})`;
   },
 };
@@ -89,8 +89,8 @@ const onEffectsListClick = (evt) => {
       image.classList.remove(currentEffect);
     }
 
-    slider.noUiSlider.set(SLIDER.MAX);
-    effectLevelValue.value = SLIDER.MAX;
+    slider.noUiSlider.set(Slider.MAX);
+    effectLevelValue.value = Slider.MAX;
 
     currentEffect = target.classList[1];
     image.classList.add(currentEffect);
