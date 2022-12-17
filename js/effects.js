@@ -41,28 +41,28 @@ const effects = {
 
   chrome: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(effectLevelValue.value, RADIX)* getEffectStep(1)})`;
+    return `grayscale(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(1)})`;
   },
 
   sepia: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `sepia(${parseInt(effectLevelValue.value, RADIX)* getEffectStep(1)})`;
+    return `sepia(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(1)})`;
   },
 
   marvin: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `invert(${parseInt(effectLevelValue.value, RADIX)* getEffectStep(MAX_EFFECT_VALUE)}%) `;
+    return `invert(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(MAX_EFFECT_VALUE)}%) `;
   },
 
   phobos: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `blur(${parseInt(effectLevelValue.value, RADIX)* getEffectStep(MAX_BLUR_VALUE)}px)`;
+    return `blur(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(MAX_BLUR_VALUE)}px)`;
   },
 
   heat: () => {
     effectLevel.classList.remove('visually-hidden');
     const effectMin = SLIDER.MAX / (MAX_HEAT_VALUE - 1);
-    return `brightness(${(effectMin + parseInt(effectLevelValue.value, RADIX))* getEffectStep(MAX_HEAT_VALUE - 1)})`;
+    return `brightness(${(effectMin + parseInt(effectLevelValue.value, RADIX)) * getEffectStep(MAX_HEAT_VALUE - 1)})`;
   },
 };
 
@@ -74,18 +74,18 @@ const setDefaultEffect = () => {
 };
 
 const setEffect = (effect) => {
-  image.style.filter = effects[effect.replace('effects__preview--','')]();
+  image.style.filter = effects[effect.replace('effects__preview--', '')]();
 };
 
 const onEffectsListClick = (evt) => {
   let target = evt.target;
 
-  if(target.classList.contains('effects__label')){
+  if (target.classList.contains('effects__label')) {
     target = evt.target.querySelector('span');
   }
 
-  if(target.classList.contains('effects__preview')){
-    if(currentEffect !== ''){
+  if (target.classList.contains('effects__preview')) {
+    if (currentEffect !== '') {
       image.classList.remove(currentEffect);
     }
 
@@ -98,7 +98,7 @@ const onEffectsListClick = (evt) => {
   }
 };
 
-const onSliderChange = ()=>{
+const onSliderChange = () => {
   effectLevelValue.value = slider.noUiSlider.get();
   setEffect(currentEffect);
 };
@@ -106,4 +106,4 @@ const onSliderChange = ()=>{
 slider.noUiSlider.on('change', onSliderChange);
 effectsList.addEventListener('click', onEffectsListClick);
 
-export {setDefaultEffect};
+export { setDefaultEffect };

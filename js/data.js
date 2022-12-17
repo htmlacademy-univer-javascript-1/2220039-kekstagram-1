@@ -9,7 +9,7 @@ const createComment = (id) => ({
   name: NAMES[getRandomPositiveInteger(0, NAMES.length - 1)],
 });
 
-const createComments = () => Array.from({length: getRandomPositiveInteger(CountComment.MIN, CountComment.MAX)}, (_, index) => createComment(index + 1));
+const createComments = () => Array.from({ length: getRandomPositiveInteger(CountComment.MIN, CountComment.MAX) }, (_, index) => createComment(index + 1));
 
 const createPhoto = (id) => ({
   id,
@@ -19,6 +19,6 @@ const createPhoto = (id) => ({
   comments: createComments(),
 });
 
-const createPhotos = () => Array.from({length: MAX_COUNT_PHOTOS}, (_, index) => createPhoto(index + 1));
+const createPhotos = () => Array.from({ length: MAX_COUNT_PHOTOS }, (_, index) => createPhoto(index + 1));
 
-export {createPhotos};
+export { createPhotos };

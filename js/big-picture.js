@@ -1,4 +1,4 @@
-import {RENDERED_COMMENTS_COUNT, STEP_ADDED_COMMENTS, SHOWN_COMMENTS_COUNT } from './consts.js';
+import { RENDERED_COMMENTS_COUNT, STEP_ADDED_COMMENTS, SHOWN_COMMENTS_COUNT } from './consts.js';
 import { isEscapeKey } from './utils.js';
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
