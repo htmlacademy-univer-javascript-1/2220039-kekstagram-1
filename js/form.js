@@ -1,5 +1,7 @@
 import { checkStringLength, isEscapeKey } from './utils.js';
 import { MAX_STRING_LENGTH, MAX_HASHTAG_COUNT, MAX_HASHTAG_LENGTH, ErrorMessage } from './consts.js';
+import { setDefaultScale } from './scale.js';
+import { setDefaultEffect } from './effects.js';
 
 const body = document.querySelector('body');
 const submitBtn = document.querySelector('.img-upload__submit');
@@ -16,7 +18,7 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__error-text'
 });
 
-const closeUploadPopup  = () => {
+const onCloseUploadPopup = () => {
   editImg.classList.add('hidden');
   body.classList.remove('modal-open');
   form.reset();
@@ -24,13 +26,13 @@ const closeUploadPopup  = () => {
 
 const onBtnEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
-    closeUploadPopup();
+    onCloseUploadPopup();
     document.removeEventListener('keydown', onBtnEscKeydown);
   }
 };
 
 const onCloseBtnClick = () => {
-  closeUploadPopup();
+  onCloseUploadPopup();
   document.removeEventListener('keydown', onBtnEscKeydown);
 };
 
@@ -51,7 +53,7 @@ const onImgUploadFieldchange = () => {
   editImg.classList.remove('hidden');
   body.classList.add('modal-open');
   closeBtn.addEventListener('click', onCloseBtnClick);
-  document.addEventListener('keydown',onBtnEscKeydown);
+  document.addEventListener('keydown', onBtnEscKeydown);
   addFieldListeners(commentsField);
   addFieldListeners(hashtagsField);
   adjustBtn();
@@ -71,13 +73,13 @@ const hashtagsHandler = (string) => {
 
   const inputText = string.toLowerCase().trim();
 
-  if(!inputText) {
+  if (!inputText) {
     return true;
   }
 
   const inputHashtags = inputText.split(/\s+/);
 
-  if(inputHashtags.length === 0) {
+  if (inputHashtags.length === 0) {
     return true;
   }
 
@@ -115,7 +117,7 @@ const hashtagsHandler = (string) => {
 
   return rules.every((rule) => {
     const isInvalid = rule.check;
-    if(isInvalid) {
+    if (isInvalid) {
       errorMessage = rule.error;
     }
     return !isInvalid;
@@ -127,7 +129,7 @@ const commentHandler = (string) => {
 
   const inputText = string.trim();
 
-  if(!inputText) {
+  if (!inputText) {
     return true;
   }
 
@@ -137,7 +139,7 @@ const commentHandler = (string) => {
   };
 
   const isInvalid = rule.check;
-  if(isInvalid) {
+  if (isInvalid) {
     errorMessage = rule.error;
   }
   return !isInvalid;
@@ -160,4 +162,14 @@ const initUploadForm = () => {
   validateForm();
 };
 
-export { initUploadForm };
+const FileInput = () => {
+  editImg.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  closeBtn.addEventListener('click', onCloseUploadPopup);
+  document.addEventListener('keydown', onBtnEscKeydown);
+  form.addEventListener('submit', adjustBtn);
+  setDefaultScale();
+  setDefaultEffect();
+};
+
+export { initUploadForm, FileInput };
