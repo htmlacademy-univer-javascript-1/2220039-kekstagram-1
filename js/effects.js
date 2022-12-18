@@ -1,12 +1,14 @@
-const MAX_EFFECT_VALUE = 100;
-const RADIX = 10;
-const MAX_BLUR_VALUE = 3;
-const MAX_HEAT_VALUE = 3;
-const EFFECTS_STEP = 0.01;
+const Effects = {
+  STEP: 0.01,
+  MAX_VALUE: 100,
+  RADIX: 10,
+  MAX_BLUR_VALUE: 3,
+  MAX_HEAT_VALUE: 3,
+};
 
 const Slider = {
   MIN: 0,
-  MAX: MAX_EFFECT_VALUE,
+  MAX: Effects.MAX_VALUE,
   STEP: 1,
 };
 
@@ -30,9 +32,11 @@ noUiSlider.create(slider, {
   step: Slider.STEP,
   connect: 'lower',
 });
-const getEffectStep = (effectMaxValue) => effectMaxValue * EFFECTS_STEP;
+
+const getEffectStep = (effectMaxValue) => effectMaxValue * Effects.STEP;
 
 effectLevel.classList.add('visually-hidden');
+
 const effects = {
   none: () => {
     effectLevel.classList.add('visually-hidden');
@@ -41,28 +45,28 @@ const effects = {
 
   chrome: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(1)})`;
+    return `grayscale(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(1)})`;
   },
 
   sepia: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `sepia(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(1)})`;
+    return `sepia(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(1)})`;
   },
 
   marvin: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `invert(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(MAX_EFFECT_VALUE)}%) `;
+    return `invert(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(Effects.MAX_VALUE)}%) `;
   },
 
   phobos: () => {
     effectLevel.classList.remove('visually-hidden');
-    return `blur(${parseInt(effectLevelValue.value, RADIX) * getEffectStep(MAX_BLUR_VALUE)}px)`;
+    return `blur(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(Effects.MAX_BLUR_VALUE)}px)`;
   },
 
   heat: () => {
     effectLevel.classList.remove('visually-hidden');
-    const effectMin = Slider.MAX / (MAX_HEAT_VALUE - 1);
-    return `brightness(${(effectMin + parseInt(effectLevelValue.value, RADIX)) * getEffectStep(MAX_HEAT_VALUE - 1)})`;
+    const effectMin = Slider.MAX / (Effects.MAX_HEAT_VALUE - 1);
+    return `brightness(${(effectMin + parseInt(effectLevelValue.value, Effects.RADIX)) * getEffectStep(Effects.MAX_HEAT_VALUE - 1)})`;
   },
 };
 
