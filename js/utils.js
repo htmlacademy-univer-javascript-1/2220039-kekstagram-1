@@ -1,13 +1,32 @@
-const getRandomPositiveInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
+const isEscKey = (evt) => evt.key === 'Escape';
 
-  return Math.floor(result);
+
+const numberDeclination = (num, nominative, genitiveSingular, genitivePlural) => {
+  const hundredths = num % 100;
+  if (hundredths <= 4 || hundredths > 20) {
+    const tenths = num % 10;
+    if (tenths === 1) {
+      return nominative;
+    }
+    if (tenths >= 2 && tenths <= 4) {
+      return genitiveSingular;
+    }
+  }
+  return genitivePlural;
 };
 
-const checkStringLength = (string, length) => string.length <= length;
+const onFail = () => {
+  const messageAlert = document.createElement('div');
+  messageAlert.style.position = 'absolute';
+  messageAlert.style.left = 0;
+  messageAlert.style.top = 0;
+  messageAlert.style.right = 0;
+  messageAlert.style.textAlign = 'center';
+  messageAlert.style.fontSize = '30px';
+  messageAlert.style.backgroundColor = 'red';
+  messageAlert.style.padding = '10px 5px';
+  messageAlert.textContent = 'Ошибка загрузки данных';
+  document.body.append(messageAlert);
+};
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-
-export { getRandomPositiveInteger, checkStringLength, isEscapeKey };
+export { isEscKey, numberDeclination, onFail };
