@@ -26,4 +26,4 @@ const sendDataToServer = (onSuccess, onFail, body) => {
     .catch(() => onFail('Не удалось опубликовать'));
 };
 
-export {getDataFromServer, sendDataToServer};
+export { getDataFromServer, sendDataToServer };

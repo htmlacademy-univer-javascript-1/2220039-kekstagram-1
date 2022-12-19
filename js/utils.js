@@ -1,10 +1,10 @@
-const getRandomNumber = (a, b) => {
+const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   return Math.floor(Math.random() * (upper - lower + 1) + lower);
 };
 
-const isEscapeKey = (evt) => evt.keyCode === 27;
+const isEscKey = (evt) => evt.key === 'Escape';
 
 const checkForRepeats = (list) => {
   const containerForСomparison = {};
@@ -25,4 +25,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomNumber, isEscapeKey, checkForRepeats, debounce};
+export { getRandomPositiveInteger, isEscKey, checkForRepeats, debounce };
