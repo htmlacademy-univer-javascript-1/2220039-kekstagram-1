@@ -1,6 +1,6 @@
-import { renderPhotosList } from './generate-mini.js';
+import { renderPhotosList } from './big-picture.js';
 import { getDataFromServer } from './api.js';
-import { getRandomNumber, debounce } from './util.js';
+import { getRandomPositiveInteger, debounce } from './utils.js';
 import { setUserFormSubmit, closeEditingWindow } from './form.js';
 
 const ALERT_SHOW_TIME = 5000;
@@ -8,7 +8,7 @@ const TIMEOUT_DELAY = 500;
 const RANDOM_PHOTOS_COUNT = 10;
 let selectedFilter = 'filter-default';
 
-const filterButtons = document.body.querySelectorAll('.img-filters__button');
+const filterBtns = document.body.querySelectorAll('.img-filters__button');
 
 const sortingCommentsCount = (photoA, photoB) => photoB.comments.length - photoA.comments.length;
 
@@ -23,7 +23,7 @@ const filteringPhotos = (photos) => {
     case 'filter-random':
       temporaryStorage = photos.slice();
       for (let i = 0; i < RANDOM_PHOTOS_COUNT && temporaryStorage.length > 0; i++) {
-        const randomPhotoIndex = getRandomNumber(0, temporaryStorage.length - 1);
+        const randomPhotoIndex = getRandomPositiveInteger(0, temporaryStorage.length - 1);
         photosForRendering.push(temporaryStorage[randomPhotoIndex]);
         temporaryStorage.splice(randomPhotoIndex, 1);
       }
@@ -63,11 +63,11 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const filterButtonsAddEvent = (cb) => {
-  filterButtons.forEach((filterButton) => {
-    filterButton.addEventListener('click', (evt) => {
+const filterBtnsAddEvent = (cb) => {
+  filterBtns.forEach((filterBtn) => {
+    filterBtn.addEventListener('click', (evt) => {
       selectedFilter = evt.target.id;
-      filterButtons.forEach((button) => button.classList.remove('img-filters__button--active'));
+      filterBtns.forEach((button) => button.classList.remove('img-filters__button--active'));
       evt.target.classList.add('img-filters__button--active');
       cb();
     });
@@ -78,7 +78,7 @@ getDataFromServer(
   (photos) => {
     renderPhotos(photos);
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-    filterButtonsAddEvent(debounce(() => renderPhotos(photos), TIMEOUT_DELAY));
+    filterBtnsAddEvent(debounce(() => renderPhotos(photos), TIMEOUT_DELAY));
   },
   (message) => showAlert(message),
 );

@@ -1,3 +1,18 @@
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
+const STEP_SCALE = 25;
+
+const form = document.querySelector('.img-upload__form');
+
+const zoomOutBtnElement = form.querySelector('.scale__control--smaller');
+const zoomBtnElement = form.querySelector('.scale__control--bigger');
+const scaleValueElement = form.querySelector('.scale__control--value');
+const imageElement = form.querySelector('.img-upload__preview img');
+
+const filterBtnsContainerElement = form.querySelector('.effects__list');
+const sliderElement = form.querySelector('.effect-level__slider');
+const filterValueElement = form.querySelector('.effect-level__value');
+
 const Effects = {
   NONE: {
     range: {
@@ -98,22 +113,7 @@ const Effects = {
   }
 };
 
-const MIN_SCALE = 25;
-const MAX_SCALE = 100;
-const STEP_SCALE = 25;
-
 let filterType = 'none';
-
-const form = document.querySelector('.img-upload__form');
-
-const zoomOutButtonElement = form.querySelector('.scale__control--smaller');
-const zoomButtonElement = form.querySelector('.scale__control--bigger');
-const scaleValueElement = form.querySelector('.scale__control--value');
-const imageElement = form.querySelector('.img-upload__preview img');
-
-const filterButtonsContainerElement = form.querySelector('.effects__list');
-const sliderElement = form.querySelector('.effect-level__slider');
-const filterValueElement = form.querySelector('.effect-level__value');
 
 const imageZoomOutHandler = () => {
   let scaleValue = parseInt(scaleValueElement.value, 10);
@@ -134,13 +134,13 @@ const imageZoomInHandler = () => {
 };
 
 const addEventListenerImage = () => {
-  zoomOutButtonElement.addEventListener('click', imageZoomOutHandler);
-  zoomButtonElement.addEventListener('click', imageZoomInHandler);
+  zoomOutBtnElement.addEventListener('click', imageZoomOutHandler);
+  zoomBtnElement.addEventListener('click', imageZoomInHandler);
 };
 
 const removeEventListenerImage = () => {
-  zoomOutButtonElement.removeEventListener('click', imageZoomOutHandler);
-  zoomButtonElement.removeEventListener('click', imageZoomInHandler);
+  zoomOutBtnElement.removeEventListener('click', imageZoomOutHandler);
+  zoomBtnElement.removeEventListener('click', imageZoomInHandler);
 };
 
 const customiseFilter = (filterID) => {
@@ -178,7 +178,7 @@ const customiseFilter = (filterID) => {
       options = Effects.PHOBOS;
       break;
     case 'effect-heat':
-      filterClass= 'effects__preview--heat';
+      filterClass = 'effects__preview--heat';
       filterType = 'brightness';
       sliderElement.removeAttribute('hidden', true);
       options = Effects.HEAT;
@@ -200,7 +200,7 @@ const addFilter = () => {
   filterType = 'none';
   noUiSlider.create(sliderElement, Effects.NONE);
   sliderElement.setAttribute('hidden', true);
-  filterButtonsContainerElement.addEventListener('change', filterChangeHandler);
+  filterBtnsContainerElement.addEventListener('change', filterChangeHandler);
 
   sliderElement.noUiSlider.on('update', () => {
     filterValueElement.value = parseFloat(sliderElement.noUiSlider.get());
@@ -209,11 +209,11 @@ const addFilter = () => {
 };
 
 const removeFilters = () => {
-  filterButtonsContainerElement.removeEventListener('change', filterChangeHandler);
+  filterBtnsContainerElement.removeEventListener('change', filterChangeHandler);
   imageElement.className = '';
   imageElement.style.transform = 'scale(1)';
   document.querySelector('#effect-none').checked = true;
   sliderElement.noUiSlider.destroy();
 };
 
-export {form, addEventListenerImage, removeEventListenerImage, addFilter, removeFilters, scaleValueElement};
+export { form, addEventListenerImage, removeEventListenerImage, addFilter, removeFilters, scaleValueElement };

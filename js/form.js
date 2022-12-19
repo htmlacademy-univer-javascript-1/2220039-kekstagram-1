@@ -1,4 +1,4 @@
-import { isEscapeKey, checkForRepeats } from './util.js';
+import { isEscKey, checkForRepeats } from './utils.js';
 import { form, addEventListenerImage, removeEventListenerImage, addFilter, removeFilters, scaleValueElement } from './effects.js';
 import { sendDataToServer } from './api.js';
 
@@ -6,6 +6,7 @@ const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const MAX_LENGTH_COMMENT = 140;
 const MAX_LENGTH_HASHTAG = 20;
 const MAX_HASHTAGS_COUNT = 5;
+const re = /^#[A-Za-zА-Яа-я0-9]{1,19}$/;
 let messageHashtagError = '';
 
 const HashtagsRules = {
@@ -18,21 +19,18 @@ const HashtagsRules = {
   OKAY: ''
 };
 
-const re = /^#[A-Za-zА-Яа-я0-9]{1,19}$/;
-
 const body = document.querySelector('body');
-const loadImgButtonElement = form.querySelector('#upload-file');
+const loadImgBtnElement = form.querySelector('#upload-file');
 const editingWindowElement = form.querySelector('.img-upload__overlay');
-const closeButtonElement = editingWindowElement.querySelector('#upload-cancel');
-const submitButtonElement = form.querySelector('.img-upload__submit');
+const closeBtnElement = editingWindowElement.querySelector('#upload-cancel');
+const submitBtnElement = form.querySelector('.img-upload__submit');
 const hashtagsInputElement = form.querySelector('input[name="hashtags"]');
 const descriptionInputElement = form.querySelector('textarea[name="description"]');
 const preview = document.querySelector('.img-upload__preview img');
-
 const successFormTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorFormTemplate = document.querySelector('#error').content.querySelector('.error');
-const errorButtonElement = errorFormTemplate.querySelector('.error__button');
-const successButtonElement = successFormTemplate.querySelector('.success__button');
+const errorBtnElement = errorFormTemplate.querySelector('.error__button');
+const successBtnElement = successFormTemplate.querySelector('.success__button');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -85,22 +83,22 @@ pristine.addValidator(descriptionInputElement, validateDescription, 'Длина 
 
 const formValidateHandler = () => {
   if (pristine.validate()) {
-    submitButtonElement.disabled = false;
+    submitBtnElement.disabled = false;
   } else {
-    submitButtonElement.disabled = true;
+    submitBtnElement.disabled = true;
   }
 };
 
-const buttonClickHandler = () => closeEditingWindow();
+const btnClickHandler = () => closeEditingWindow();
 
-const buttonKeydownHandler = (evt) => {
-  if (isEscapeKey(evt) && (evt.target !== hashtagsInputElement && evt.target !== descriptionInputElement)) {
+const btnKeydownHandler = (evt) => {
+  if (isEscKey(evt) && (evt.target !== hashtagsInputElement && evt.target !== descriptionInputElement)) {
     closeEditingWindow();
   }
 };
 
 const openEditingWindow = () => {
-  const img = loadImgButtonElement.files[0];
+  const img = loadImgBtnElement.files[0];
   const imgName = img.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => imgName.endsWith(it));
 
@@ -111,8 +109,8 @@ const openEditingWindow = () => {
   editingWindowElement.classList.remove('hidden');
   body.classList.add('modal-open');
 
-  closeButtonElement.addEventListener('click', buttonClickHandler);
-  document.addEventListener('keydown', buttonKeydownHandler);
+  closeBtnElement.addEventListener('click', btnClickHandler);
+  document.addEventListener('keydown', btnKeydownHandler);
   hashtagsInputElement.addEventListener('input', formValidateHandler);
   descriptionInputElement.addEventListener('input', formValidateHandler);
 
@@ -120,14 +118,14 @@ const openEditingWindow = () => {
   addFilter();
 };
 
-loadImgButtonElement.addEventListener('input', openEditingWindow);
+loadImgBtnElement.addEventListener('input', openEditingWindow);
 
-function closeEditingWindow () {
+function closeEditingWindow() {
   editingWindowElement.classList.add('hidden');
   body.classList.remove('modal-open');
 
-  closeButtonElement.removeEventListener('click', buttonClickHandler);
-  document.removeEventListener('keydown', buttonKeydownHandler);
+  closeBtnElement.removeEventListener('click', btnClickHandler);
+  document.removeEventListener('keydown', btnKeydownHandler);
   hashtagsInputElement.removeEventListener('input', formValidateHandler);
   descriptionInputElement.removeEventListener('input', formValidateHandler);
 
@@ -137,17 +135,17 @@ function closeEditingWindow () {
   scaleValueElement.value = '100%';
   hashtagsInputElement.value = '';
   descriptionInputElement.value = '';
-  loadImgButtonElement.value = '';
+  loadImgBtnElement.value = '';
 }
 
-const blockSubmitButton = () => {
-  submitButtonElement.disabled = true;
-  submitButtonElement.textContent = 'Публикую...';
+const blockSubmitBtn = () => {
+  submitBtnElement.disabled = true;
+  submitBtnElement.textContent = 'Публикую...';
 };
 
-const unblockSubmitButton = () => {
-  submitButtonElement.disabled = false;
-  submitButtonElement.textContent = 'Опубликовать';
+const unblockSubmitBtn = () => {
+  submitBtnElement.disabled = false;
+  submitBtnElement.textContent = 'Опубликовать';
 };
 
 const outOfFormHandler = (evt) => {
@@ -160,40 +158,40 @@ const outOfFormHandler = (evt) => {
 };
 
 const successKeydownHandler = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscKey(evt)) {
     evt.preventDefault();
     hideSuccessForm();
   }
 };
 
 const errorKeydownHandler = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscKey(evt)) {
     evt.preventDefault();
     hideErrorForm();
   }
 };
 
-const successButtonHandler = () => hideSuccessForm();
+const successBtnHandler = () => hideSuccessForm();
 
-const errorButtonHandler = () => hideErrorForm();
+const errorBtnHandler = () => hideErrorForm();
 
-function hideSuccessForm () {
+function hideSuccessForm() {
   document.removeEventListener('click', outOfFormHandler);
   document.removeEventListener('keydown', successKeydownHandler);
   body.removeChild(successFormTemplate);
-  successButtonElement.removeEventListener('click', successButtonHandler);
+  successBtnElement.removeEventListener('click', successBtnHandler);
 }
 
-function hideErrorForm () {
+function hideErrorForm() {
   editingWindowElement.classList.remove('hidden');
   body.removeChild(errorFormTemplate);
-  errorButtonElement.removeEventListener('click', errorButtonHandler);
+  errorBtnElement.removeEventListener('click', errorBtnHandler);
   document.removeEventListener('click', outOfFormHandler);
   document.removeEventListener('keydown', errorKeydownHandler);
 }
 
 const showSuccessForm = () => {
-  successButtonElement.addEventListener('click', successButtonHandler);
+  successBtnElement.addEventListener('click', successBtnHandler);
   body.appendChild(successFormTemplate);
   document.addEventListener('click', outOfFormHandler);
   document.addEventListener('keydown', successKeydownHandler);
@@ -201,9 +199,9 @@ const showSuccessForm = () => {
 
 const showErrorForm = (message) => {
   editingWindowElement.classList.add('hidden');
-  errorButtonElement.textContent = 'Попробовать ещё раз';
+  errorBtnElement.textContent = 'Попробовать ещё раз';
   errorFormTemplate.querySelector('.error__title').textContent = message;
-  errorButtonElement.addEventListener('click', errorButtonHandler);
+  errorBtnElement.addEventListener('click', errorBtnHandler);
   body.appendChild(errorFormTemplate);
   document.addEventListener('click', outOfFormHandler);
   document.addEventListener('keydown', errorKeydownHandler);
@@ -213,21 +211,21 @@ const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    blockSubmitButton();
+    blockSubmitBtn();
 
     sendDataToServer(
       () => {
         onSuccess();
-        unblockSubmitButton();
+        unblockSubmitBtn();
         showSuccessForm();
       },
       (message) => {
         showErrorForm(message);
-        unblockSubmitButton();
+        unblockSubmitBtn();
       },
       new FormData(evt.target),
     );
   });
 };
 
-export {setUserFormSubmit, closeEditingWindow};
+export { setUserFormSubmit, closeEditingWindow };
