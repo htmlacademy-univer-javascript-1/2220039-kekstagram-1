@@ -1,113 +1,219 @@
 const Effects = {
-  STEP: 0.01,
-  MAX_VALUE: 100,
-  RADIX: 10,
-  MAX_BLUR_VALUE: 3,
-  MAX_HEAT_VALUE: 3,
+  NONE: {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 1,
+    step: 0.1,
+    connect: 'lower',
+    format: {
+      to: function (value) {
+        return value;
+      },
+      from: function (value) {
+        return parseFloat(value);
+      }
+    }
+  },
+  CHROME: {
+    range: {
+      min: 0,
+      max: 1
+    },
+    start: 1,
+    step: 0.1,
+    format: {
+      to: function (value) {
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      }
+    }
+  },
+  SEPIA: {
+    range: {
+      min: 0,
+      max: 1
+    },
+    start: 1,
+    step: 0.1,
+    format: {
+      to: function (value) {
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      }
+    }
+  },
+  MARVIN: {
+    range: {
+      min: 0,
+      max: 100
+    },
+    start: 100,
+    step: 1,
+    format: {
+      to: function (value) {
+        return `${value}%`;
+      },
+      from: function (value) {
+        return parseFloat(value);
+      }
+    }
+  },
+  PHOBOS: {
+    range: {
+      min: 0,
+      max: 3
+    },
+    start: 3,
+    step: 0.1,
+    format: {
+      to: function (value) {
+        return `${value.toFixed(1)}px`;
+      },
+      from: function (value) {
+        return parseFloat(value);
+      }
+    }
+  },
+  HEAT: {
+    range: {
+      min: 1,
+      max: 3
+    },
+    start: 3,
+    step: 0.1,
+    format: {
+      to: function (value) {
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      }
+    }
+  }
 };
 
-const Slider = {
-  MIN: 0,
-  MAX: Effects.MAX_VALUE,
-  STEP: 1,
-};
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
+const STEP_SCALE = 25;
+
+let filterType = 'none';
 
 const form = document.querySelector('.img-upload__form');
-const effectsList = form.querySelector('.effects__list');
-const preview = form.querySelector('.img-upload__preview');
-const image = preview.querySelector('img');
-const effectLevel = form.querySelector('.img-upload__effect-level');
-const effectLevelValue = form.querySelector('.effect-level__value');
-const slider = form.querySelector('.effect-level__slider');
-const defaultImageClass = image.classList[0];
 
-let currentEffect = '';
+const zoomOutButtonElement = form.querySelector('.scale__control--smaller');
+const zoomButtonElement = form.querySelector('.scale__control--bigger');
+const scaleValueElement = form.querySelector('.scale__control--value');
+const imageElement = form.querySelector('.img-upload__preview img');
 
-noUiSlider.create(slider, {
-  range: {
-    min: Slider.MIN,
-    max: Slider.MAX,
-  },
-  start: Slider.MAX,
-  step: Slider.STEP,
-  connect: 'lower',
-});
+const filterButtonsContainerElement = form.querySelector('.effects__list');
+const sliderElement = form.querySelector('.effect-level__slider');
+const filterValueElement = form.querySelector('.effect-level__value');
 
-const getEffectStep = (effectMaxValue) => effectMaxValue * Effects.STEP;
-
-effectLevel.classList.add('visually-hidden');
-
-const effects = {
-  none: () => {
-    effectLevel.classList.add('visually-hidden');
-    return 'none';
-  },
-
-  chrome: () => {
-    effectLevel.classList.remove('visually-hidden');
-    return `grayscale(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(1)})`;
-  },
-
-  sepia: () => {
-    effectLevel.classList.remove('visually-hidden');
-    return `sepia(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(1)})`;
-  },
-
-  marvin: () => {
-    effectLevel.classList.remove('visually-hidden');
-    return `invert(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(Effects.MAX_VALUE)}%) `;
-  },
-
-  phobos: () => {
-    effectLevel.classList.remove('visually-hidden');
-    return `blur(${parseInt(effectLevelValue.value, Effects.RADIX) * getEffectStep(Effects.MAX_BLUR_VALUE)}px)`;
-  },
-
-  heat: () => {
-    effectLevel.classList.remove('visually-hidden');
-    const effectMin = Slider.MAX / (Effects.MAX_HEAT_VALUE - 1);
-    return `brightness(${(effectMin + parseInt(effectLevelValue.value, Effects.RADIX)) * getEffectStep(Effects.MAX_HEAT_VALUE - 1)})`;
-  },
-};
-
-const setDefaultEffect = () => {
-  effectLevel.classList.add('visually-hidden');
-
-  image.className = defaultImageClass;
-  image.style.filter = effects.none;
-};
-
-const setEffect = (effect) => {
-  image.style.filter = effects[effect.replace('effects__preview--', '')]();
-};
-
-const onEffectsListClick = (evt) => {
-  let target = evt.target;
-
-  if (target.classList.contains('effects__label')) {
-    target = evt.target.querySelector('span');
-  }
-
-  if (target.classList.contains('effects__preview')) {
-    if (currentEffect !== '') {
-      image.classList.remove(currentEffect);
-    }
-
-    slider.noUiSlider.set(Slider.MAX);
-    effectLevelValue.value = Slider.MAX;
-
-    currentEffect = target.classList[1];
-    image.classList.add(currentEffect);
-    setEffect(currentEffect);
+const imageZoomOutHandler = () => {
+  let scaleValue = parseInt(scaleValueElement.value, 10);
+  if (scaleValue > MIN_SCALE) {
+    scaleValue -= STEP_SCALE;
+    scaleValueElement.value = `${scaleValue}%`;
+    imageElement.style.transform = `scale(0.${scaleValue})`;
   }
 };
 
-const onSliderChange = () => {
-  effectLevelValue.value = slider.noUiSlider.get();
-  setEffect(currentEffect);
+const imageZoomInHandler = () => {
+  let scaleValue = parseInt(scaleValueElement.value, 10);
+  if (scaleValue < MAX_SCALE) {
+    scaleValue += STEP_SCALE;
+    scaleValueElement.value = `${scaleValue}%`;
+    imageElement.style.transform = (scaleValue === MAX_SCALE) ? 'scale(1)' : `scale(0.${scaleValue})`;
+  }
 };
 
-slider.noUiSlider.on('change', onSliderChange);
-effectsList.addEventListener('click', onEffectsListClick);
+const addEventListenerImage = () => {
+  zoomOutButtonElement.addEventListener('click', imageZoomOutHandler);
+  zoomButtonElement.addEventListener('click', imageZoomInHandler);
+};
 
-export { setDefaultEffect };
+const removeEventListenerImage = () => {
+  zoomOutButtonElement.removeEventListener('click', imageZoomOutHandler);
+  zoomButtonElement.removeEventListener('click', imageZoomInHandler);
+};
+
+const customiseFilter = (filterID) => {
+  let filterClass;
+  let options;
+  switch (filterID) {
+    case 'effect-none':
+      filterClass = 'effects__preview--none';
+      filterType = 'none';
+      sliderElement.setAttribute('hidden', true);
+      options = Effects.NONE;
+      break;
+    case 'effect-chrome':
+      filterClass = 'effects__preview--chrome';
+      filterType = 'grayscale';
+      sliderElement.removeAttribute('hidden', true);
+      options = Effects.CHROME;
+      break;
+    case 'effect-sepia':
+      filterClass = 'effects__preview--sepia';
+      filterType = 'sepia';
+      sliderElement.removeAttribute('hidden', true);
+      options = Effects.SEPIA;
+      break;
+    case 'effect-marvin':
+      filterClass = 'effects__preview--marvin';
+      filterType = 'invert';
+      sliderElement.removeAttribute('hidden', true);
+      options = Effects.MARVIN;
+      break;
+    case 'effect-phobos':
+      filterClass = 'effects__preview--phobos';
+      filterType = 'blur';
+      sliderElement.removeAttribute('hidden', true);
+      options = Effects.PHOBOS;
+      break;
+    case 'effect-heat':
+      filterClass= 'effects__preview--heat';
+      filterType = 'brightness';
+      sliderElement.removeAttribute('hidden', true);
+      options = Effects.HEAT;
+      break;
+  }
+  imageElement.className = '';
+  imageElement.classList.add(filterClass);
+  sliderElement.noUiSlider.updateOptions(options);
+};
+
+const filterChangeHandler = (evt) => {
+  if (evt.target.closest('.effects__item')) {
+    customiseFilter(evt.target.id);
+  }
+};
+
+const addFilter = () => {
+  filterValueElement.value = 1;
+  filterType = 'none';
+  noUiSlider.create(sliderElement, Effects.NONE);
+  sliderElement.setAttribute('hidden', true);
+  filterButtonsContainerElement.addEventListener('change', filterChangeHandler);
+
+  sliderElement.noUiSlider.on('update', () => {
+    filterValueElement.value = parseFloat(sliderElement.noUiSlider.get());
+    imageElement.style.filter = (filterType !== 'none') ? `${filterType}(${sliderElement.noUiSlider.get()})` : '';
+  });
+};
+
+const removeFilters = () => {
+  filterButtonsContainerElement.removeEventListener('change', filterChangeHandler);
+  imageElement.className = '';
+  imageElement.style.transform = 'scale(1)';
+  document.querySelector('#effect-none').checked = true;
+  sliderElement.noUiSlider.destroy();
+};
+
+export {form, addEventListenerImage, removeEventListenerImage, addFilter, removeFilters, scaleValueElement};
