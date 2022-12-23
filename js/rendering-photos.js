@@ -14,18 +14,18 @@ const sortingCommentsCount = (photoA, photoB) => photoB.comments.length - photoA
 
 const filteringPhotos = (photos) => {
   let photosForRendering = [];
-  let temporaryStorage = [];
+  let temporaryPhotoStorage = [];
   switch (selectedFilter) {
     case 'filter-discussed':
       photosForRendering = photos.slice().sort(sortingCommentsCount);
       break;
 
     case 'filter-random':
-      temporaryStorage = photos.slice();
-      for (let i = 0; i < RANDOM_PHOTOS_COUNT && temporaryStorage.length > 0; i++) {
-        const randomPhotoIndex = getRandomPositiveInteger(0, temporaryStorage.length - 1);
-        photosForRendering.push(temporaryStorage[randomPhotoIndex]);
-        temporaryStorage.splice(randomPhotoIndex, 1);
+      temporaryPhotoStorage = photos.slice();
+      for (let i = 0; i < RANDOM_PHOTOS_COUNT && temporaryPhotoStorage.length > 0; i++) {
+        const randomPhotoIndex = getRandomPositiveInteger(0, temporaryPhotoStorage.length - 1);
+        photosForRendering.push(temporaryPhotoStorage[randomPhotoIndex]);
+        temporaryPhotoStorage.splice(randomPhotoIndex, 1);
       }
       break;
 

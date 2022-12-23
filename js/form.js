@@ -9,7 +9,7 @@ const MAX_HASHTAGS_COUNT = 5;
 const re = /^#[A-Za-zА-Яа-я0-9]{1,19}$/;
 let messageHashtagError = '';
 
-const HashtagsRules = {
+const HashtagRule = {
   HASHTAG_SYMBOL: 'Хэш-тег начинается с символа # (решётка).',
   VALID_CHARACTERS: 'Cтрока после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д..',
   ONLY_HASHTAG: 'Хеш-тег не может состоять только из одной решётки.',
@@ -40,34 +40,34 @@ const pristine = new Pristine(form, {
 }, true);
 
 const validateHashtag = (value) => {
-  messageHashtagError = HashtagsRules.OKAY;
+  messageHashtagError = HashtagRule.OKAY;
   value = value.trim().toLowerCase();
   const hashtags = value.split(' ');
   if (hashtags[0] !== '') {
     for (const hashtag of hashtags) {
       if (!re.test(hashtag)) {
         if (hashtag[0] !== '#') {
-          messageHashtagError = HashtagsRules.HASHTAG_SYMBOL;
+          messageHashtagError = HashtagRule.HASHTAG_SYMBOL;
           return false;
         }
         if (hashtag.length === 1 && hashtag[0] === '#') {
-          messageHashtagError = HashtagsRules.ONLY_HASHTAG;
+          messageHashtagError = HashtagRule.ONLY_HASHTAG;
           return false;
         }
         if (hashtag.length > MAX_LENGTH_HASHTAG) {
-          messageHashtagError = HashtagsRules.MAX_LENGTH;
+          messageHashtagError = HashtagRule.MAX_LENGTH;
           return false;
         }
-        messageHashtagError = HashtagsRules.VALID_CHARACTERS;
+        messageHashtagError = HashtagRule.VALID_CHARACTERS;
         return false;
       }
     }
     if (hashtags.length > MAX_HASHTAGS_COUNT) {
-      messageHashtagError = HashtagsRules.MAX_COUNT;
+      messageHashtagError = HashtagRule.MAX_COUNT;
       return false;
     }
     if (checkForRepeats(hashtags)) {
-      messageHashtagError = HashtagsRules.NO_REPEAT;
+      messageHashtagError = HashtagRule.NO_REPEAT;
       return false;
     }
   }
