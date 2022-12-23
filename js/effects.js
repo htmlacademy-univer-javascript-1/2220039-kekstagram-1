@@ -2,18 +2,19 @@ const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 const STEP_SCALE = 25;
 
-const form = document.querySelector('.img-upload__form');
+const formElement = document.querySelector('.img-upload__form');
 
-const zoomOutBtnElement = form.querySelector('.scale__control--smaller');
-const zoomBtnElement = form.querySelector('.scale__control--bigger');
-const scaleValueElement = form.querySelector('.scale__control--value');
-const imageElement = form.querySelector('.img-upload__preview img');
+const zoomOutBtnElement = formElement.querySelector('.scale__control--smaller');
+const zoomBtnElement = formElement.querySelector('.scale__control--bigger');
+const scaleValueElement = formElement.querySelector('.scale__control--value');
+const imageElement = formElement.querySelector('.img-upload__preview img');
 
-const filterBtnsContainerElement = form.querySelector('.effects__list');
-const sliderElement = form.querySelector('.effect-level__slider');
-const filterValueElement = form.querySelector('.effect-level__value');
+const filterBtnsContainerElement = formElement.querySelector('.effects__list');
+const sliderElement = formElement.querySelector('.effect-level__slider');
+const filterValueElement = formElement.querySelector('.effect-level__value');
+const sliderFieldElement = formElement.querySelector('.img-upload__effect-level');
 
-const Effects = {
+const Effect = {
   NONE: {
     range: {
       min: 0,
@@ -143,6 +144,7 @@ const removeEventListenerImage = () => {
   zoomBtnElement.removeEventListener('click', imageZoomInHandler);
 };
 
+sliderFieldElement.classList.add('hidden');
 const customiseFilter = (filterID) => {
   let filterClass;
   let options;
@@ -151,37 +153,43 @@ const customiseFilter = (filterID) => {
       filterClass = 'effects__preview--none';
       filterType = 'none';
       sliderElement.setAttribute('hidden', true);
-      options = Effects.NONE;
+      sliderFieldElement.classList.add('hidden');
+      options = Effect.NONE;
       break;
     case 'effect-chrome':
       filterClass = 'effects__preview--chrome';
       filterType = 'grayscale';
       sliderElement.removeAttribute('hidden', true);
-      options = Effects.CHROME;
+      sliderFieldElement.classList.remove('hidden');
+      options = Effect.CHROME;
       break;
     case 'effect-sepia':
       filterClass = 'effects__preview--sepia';
       filterType = 'sepia';
       sliderElement.removeAttribute('hidden', true);
-      options = Effects.SEPIA;
+      sliderFieldElement.classList.remove('hidden');
+      options = Effect.SEPIA;
       break;
     case 'effect-marvin':
       filterClass = 'effects__preview--marvin';
       filterType = 'invert';
       sliderElement.removeAttribute('hidden', true);
-      options = Effects.MARVIN;
+      sliderFieldElement.classList.remove('hidden');
+      options = Effect.MARVIN;
       break;
     case 'effect-phobos':
       filterClass = 'effects__preview--phobos';
       filterType = 'blur';
       sliderElement.removeAttribute('hidden', true);
-      options = Effects.PHOBOS;
+      sliderFieldElement.classList.remove('hidden');
+      options = Effect.PHOBOS;
       break;
     case 'effect-heat':
       filterClass = 'effects__preview--heat';
       filterType = 'brightness';
       sliderElement.removeAttribute('hidden', true);
-      options = Effects.HEAT;
+      sliderFieldElement.classList.remove('hidden');
+      options = Effect.HEAT;
       break;
   }
   imageElement.className = '';
@@ -198,7 +206,7 @@ const filterChangeHandler = (evt) => {
 const addFilter = () => {
   filterValueElement.value = 1;
   filterType = 'none';
-  noUiSlider.create(sliderElement, Effects.NONE);
+  noUiSlider.create(sliderElement, Effect.NONE);
   sliderElement.setAttribute('hidden', true);
   filterBtnsContainerElement.addEventListener('change', filterChangeHandler);
 
@@ -216,4 +224,4 @@ const removeFilters = () => {
   sliderElement.noUiSlider.destroy();
 };
 
-export { form, addEventListenerImage, removeEventListenerImage, addFilter, removeFilters, scaleValueElement };
+export { formElement as form, addEventListenerImage, removeEventListenerImage, addFilter, removeFilters, scaleValueElement };
