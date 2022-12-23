@@ -14,7 +14,7 @@ const sliderElement = form.querySelector('.effect-level__slider');
 const filterValueElement = form.querySelector('.effect-level__value');
 const sliderField = form.querySelector('.img-upload__effect-level');
 
-const Effects = {
+const Effect = {
   NONE: {
     range: {
       min: 0,
@@ -154,42 +154,42 @@ const customiseFilter = (filterID) => {
       filterType = 'none';
       sliderElement.setAttribute('hidden', true);
       sliderField.classList.add('hidden');
-      options = Effects.NONE;
+      options = Effect.NONE;
       break;
     case 'effect-chrome':
       filterClass = 'effects__preview--chrome';
       filterType = 'grayscale';
       sliderElement.removeAttribute('hidden', true);
       sliderField.classList.remove('hidden');
-      options = Effects.CHROME;
+      options = Effect.CHROME;
       break;
     case 'effect-sepia':
       filterClass = 'effects__preview--sepia';
       filterType = 'sepia';
       sliderElement.removeAttribute('hidden', true);
       sliderField.classList.remove('hidden');
-      options = Effects.SEPIA;
+      options = Effect.SEPIA;
       break;
     case 'effect-marvin':
       filterClass = 'effects__preview--marvin';
       filterType = 'invert';
       sliderElement.removeAttribute('hidden', true);
       sliderField.classList.remove('hidden');
-      options = Effects.MARVIN;
+      options = Effect.MARVIN;
       break;
     case 'effect-phobos':
       filterClass = 'effects__preview--phobos';
       filterType = 'blur';
       sliderElement.removeAttribute('hidden', true);
       sliderField.classList.remove('hidden');
-      options = Effects.PHOBOS;
+      options = Effect.PHOBOS;
       break;
     case 'effect-heat':
       filterClass = 'effects__preview--heat';
       filterType = 'brightness';
       sliderElement.removeAttribute('hidden', true);
       sliderField.classList.remove('hidden');
-      options = Effects.HEAT;
+      options = Effect.HEAT;
       break;
   }
   imageElement.className = '';
@@ -206,7 +206,7 @@ const filterChangeHandler = (evt) => {
 const addFilter = () => {
   filterValueElement.value = 1;
   filterType = 'none';
-  noUiSlider.create(sliderElement, Effects.NONE);
+  noUiSlider.create(sliderElement, Effect.NONE);
   sliderElement.setAttribute('hidden', true);
   filterBtnsContainerElement.addEventListener('change', filterChangeHandler);
 
