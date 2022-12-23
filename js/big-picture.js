@@ -22,9 +22,9 @@ const appendNewComments = ({ avatar, name, message }) => {
   return newComment;
 };
 
-function updateCommentsCount(value) {
+const updateCommentsCount = (value) => {
   shownCommentsCount.textContent = value;
-}
+};
 
 const loadNewComments = () => {
   let addingCounter = MAX_COMMENTS_COUNT;
