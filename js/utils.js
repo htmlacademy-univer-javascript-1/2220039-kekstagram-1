@@ -7,12 +7,12 @@ const getRandomPositiveInteger = (a, b) => {
 const isEscKey = (evt) => evt.key === 'Escape';
 
 const checkForRepeats = (list) => {
-  const containerForСomparison = {};
+  const containerForComparison = {};
   for (const element of list) {
-    if (containerForСomparison[element]) {
+    if (containerForComparison[element]) {
       return true;
     }
-    containerForСomparison[element] = 1;
+    containerForComparison[element] = 1;
   }
   return false;
 };
