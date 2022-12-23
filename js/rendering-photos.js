@@ -1,7 +1,6 @@
 import { renderPhotosList } from './big-picture.js';
-import { getDataFromServer } from './api.js';
-import { getRandomPositiveInteger, debounce } from './utils.js';
-import { setUserFormSubmit, closeEditingWindow } from './form.js';
+import { getRandomPositiveInteger} from './utils.js';
+import { closeEditingWindow,  setUserFormSubmit  } from './form.js';
 
 const ALERT_SHOW_TIME = 5000;
 const TIMEOUT_DELAY = 500;
@@ -73,14 +72,6 @@ const filterBtnsAddEvent = (cb) => {
     });
   });
 };
-
-getDataFromServer(
-  (photos) => {
-    renderPhotos(photos);
-    document.querySelector('.img-filters').classList.remove('img-filters--inactive');
-    filterBtnsAddEvent(debounce(() => renderPhotos(photos), TIMEOUT_DELAY));
-  },
-  (message) => showAlert(message),
-);
-
 setUserFormSubmit(closeEditingWindow);
+
+export{ renderPhotos, filterBtnsAddEvent, showAlert, TIMEOUT_DELAY };
