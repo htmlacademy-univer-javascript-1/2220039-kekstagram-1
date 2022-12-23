@@ -6,7 +6,7 @@ const bigPictureWindowElement = document.querySelector('.big-picture');
 const commentTemplate = bigPictureWindowElement.querySelector('#comment').content.querySelector('.social__comment');
 const closeBtnElement = bigPictureWindowElement.querySelector('.big-picture__cancel');
 const commentsContainerElement = bigPictureWindowElement.querySelector('.social__comments');
-const loaderСommentsBtnElement = bigPictureWindowElement.querySelector('.comments-loader');
+const loaderCommentsBtnElement = bigPictureWindowElement.querySelector('.comments-loader');
 const shownCommentsCount = bigPictureWindowElement.querySelector('.shown-comments-count');
 const picturesContainerElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('a');
@@ -31,7 +31,7 @@ const loadNewComments = () => {
   if (allComments.length > commentsCounter) {
     if ((allComments.length - commentsCounter) <= MAX_COMMENTS_COUNT) {
       addingCounter = allComments.length - commentsCounter;
-      loaderСommentsBtnElement.classList.add('hidden');
+      loaderCommentsBtnElement.classList.add('hidden');
     }
     const fragment = document.createDocumentFragment();
     allComments.slice(commentsCounter, commentsCounter + addingCounter).forEach((comment) => fragment.appendChild(appendNewComments(comment)));
@@ -54,7 +54,7 @@ function closeBigPictureWindow() {
   closeBtnElement.removeEventListener('click', btnClickHandler);
   bigPictureWindowElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  loaderСommentsBtnElement.removeEventListener('click', loadNewComments);
+  loaderCommentsBtnElement.removeEventListener('click', loadNewComments);
 }
 
 const openBigPictureWindow = ({ url, description, likes, comments }) => {
@@ -62,7 +62,7 @@ const openBigPictureWindow = ({ url, description, likes, comments }) => {
   bigPictureWindowElement.querySelector('.likes-count').textContent = likes;
   bigPictureWindowElement.querySelector('.comments-count').textContent = comments.length;
   bigPictureWindowElement.querySelector('.social__caption').textContent = description;
-  loaderСommentsBtnElement.classList.remove('hidden');
+  loaderCommentsBtnElement.classList.remove('hidden');
 
   commentsContainerElement.innerHTML = '';
   allComments = comments;
@@ -74,7 +74,7 @@ const openBigPictureWindow = ({ url, description, likes, comments }) => {
 
   closeBtnElement.addEventListener('click', btnClickHandler);
   document.addEventListener('keydown', btnKeydownHandler);
-  loaderСommentsBtnElement.addEventListener('click', loadNewComments);
+  loaderCommentsBtnElement.addEventListener('click', loadNewComments);
 };
 
 const renderPhotosList = (photosList) => {
