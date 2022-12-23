@@ -26,7 +26,7 @@ const closeBtnElement = editingWindowElement.querySelector('#upload-cancel');
 const submitBtnElement = form.querySelector('.img-upload__submit');
 const hashtagsInputElement = form.querySelector('input[name="hashtags"]');
 const descriptionInputElement = form.querySelector('textarea[name="description"]');
-const preview = document.querySelector('.img-upload__preview img');
+const previewElement = document.querySelector('.img-upload__preview img');
 const successFormTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorFormTemplate = document.querySelector('#error').content.querySelector('.error');
 const errorBtnElement = errorFormTemplate.querySelector('.error__button');
@@ -103,7 +103,7 @@ const openEditingWindow = () => {
   const matches = FILE_TYPES.some((it) => imgName.endsWith(it));
 
   if (matches) {
-    preview.src = URL.createObjectURL(img);
+    previewElement.src = URL.createObjectURL(img);
   }
 
   editingWindowElement.classList.remove('hidden');

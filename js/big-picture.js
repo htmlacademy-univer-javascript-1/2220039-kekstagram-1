@@ -7,7 +7,7 @@ const commentTemplate = bigPictureWindowElement.querySelector('#comment').conten
 const closeBtnElement = bigPictureWindowElement.querySelector('.big-picture__cancel');
 const commentsContainerElement = bigPictureWindowElement.querySelector('.social__comments');
 const loaderCommentsBtnElement = bigPictureWindowElement.querySelector('.comments-loader');
-const shownCommentsCount = bigPictureWindowElement.querySelector('.shown-comments-count');
+const shownCommentsCountElement = bigPictureWindowElement.querySelector('.shown-comments-count');
 const picturesContainerElement = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('a');
 
@@ -23,7 +23,7 @@ const appendNewComments = ({ avatar, name, message }) => {
 };
 
 const updateCommentsCount = (value) => {
-  shownCommentsCount.textContent = value;
+  shownCommentsCountElement.textContent = value;
 };
 
 const loadNewComments = () => {
