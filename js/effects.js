@@ -12,7 +12,7 @@ const imageElement = form.querySelector('.img-upload__preview img');
 const filterBtnsContainerElement = form.querySelector('.effects__list');
 const sliderElement = form.querySelector('.effect-level__slider');
 const filterValueElement = form.querySelector('.effect-level__value');
-const sliderFieldset = form.querySelector('.img-upload__effect-level');
+const sliderField = form.querySelector('.img-upload__effect-level');
 
 const Effects = {
   NONE: {
@@ -144,7 +144,7 @@ const removeEventListenerImage = () => {
   zoomBtnElement.removeEventListener('click', imageZoomInHandler);
 };
 
-sliderFieldset.classList.add('hidden');
+sliderField.classList.add('hidden');
 const customiseFilter = (filterID) => {
   let filterClass;
   let options;
@@ -153,42 +153,42 @@ const customiseFilter = (filterID) => {
       filterClass = 'effects__preview--none';
       filterType = 'none';
       sliderElement.setAttribute('hidden', true);
-      sliderFieldset.classList.add('hidden');
+      sliderField.classList.add('hidden');
       options = Effects.NONE;
       break;
     case 'effect-chrome':
       filterClass = 'effects__preview--chrome';
       filterType = 'grayscale';
       sliderElement.removeAttribute('hidden', true);
-      sliderFieldset.classList.remove('hidden');
+      sliderField.classList.remove('hidden');
       options = Effects.CHROME;
       break;
     case 'effect-sepia':
       filterClass = 'effects__preview--sepia';
       filterType = 'sepia';
       sliderElement.removeAttribute('hidden', true);
-      sliderFieldset.classList.remove('hidden');
+      sliderField.classList.remove('hidden');
       options = Effects.SEPIA;
       break;
     case 'effect-marvin':
       filterClass = 'effects__preview--marvin';
       filterType = 'invert';
       sliderElement.removeAttribute('hidden', true);
-      sliderFieldset.classList.remove('hidden');
+      sliderField.classList.remove('hidden');
       options = Effects.MARVIN;
       break;
     case 'effect-phobos':
       filterClass = 'effects__preview--phobos';
       filterType = 'blur';
       sliderElement.removeAttribute('hidden', true);
-      sliderFieldset.classList.remove('hidden');
+      sliderField.classList.remove('hidden');
       options = Effects.PHOBOS;
       break;
     case 'effect-heat':
       filterClass = 'effects__preview--heat';
       filterType = 'brightness';
       sliderElement.removeAttribute('hidden', true);
-      sliderFieldset.classList.remove('hidden');
+      sliderField.classList.remove('hidden');
       options = Effects.HEAT;
       break;
   }
